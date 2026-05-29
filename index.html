@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+    <!-- 모바일 화면에서도 비율이 깨지지 않도록 반응형 설정을 추가합니다. -->
+    <meta name="viewport" content="width=device-width, initial-scale=device-width, initial-scale=1.0">
+    <title>프리미엄 스마트 계산기</title>
+
+    <!-- 구글 웹 폰트(Outfit)를 불러와 고급스러운 글씨체를 적용합니다. -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- 아이콘을 표시하기 위해 Font Awesome 아이콘 라이브러리를 불러옵니다. -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- 계산기 스타일 시트(style.css)를 연결합니다. -->
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <!-- 전체 배경과 요소를 감싸는 최외곽 컨테이너입니다. -->
+    <div class="app-container">
+
+        <!-- 오로라 빛 그라데이션 배경 효과를 주기 위한 백그라운드 블러 오브젝트들입니다. -->
+        <div class="bg-glow bg-glow-1"></div>
+        <div class="bg-glow bg-glow-2"></div>
+
+        <!-- 계산기 본체 영역입니다. -->
+        <main class="calculator" id="calculator">
+
+            <!-- 계산기 상단 제어 바 (테마 토글 버튼, 계산 기록 토글 버튼이 들어갑니다) -->
+            <div class="calc-header">
+                <!-- 다크모드/라이트모드 전환 스위치 -->
+                <button class="icon-btn" id="theme-toggle" aria-label="테마 전환" title="화면 모드 변경">
+                    <i class="fas fa-moon"></i>
+                </button>
+                <span class="app-title">계산기 (변경 테스트)</span>
+                <!-- 계산 기록을 열고 닫는 스위치 -->
+                <button class="icon-btn" id="history-toggle" aria-label="기록 보기" title="계산 기록 열기">
+                    <i class="fas fa-history"></i>
+                </button>
+            </div>
+
+            <!-- [추가된 탭 영역] 일반 계산과 환율 계산 모드를 전환하는 탭 버튼 스위치입니다. -->
+            <div class="calc-tabs">
+                <button class="tab-btn active" id="tab-calc" title="일반 계산기 모드">
+                    <i class="fa-solid fa-calculator"></i> 일반 계산
+                </button>
+                <button class="tab-btn" id="tab-currency" title="실시간 환율 계산 모드">
+                    <i class="fa-solid fa-money-bill-transfer"></i> 환율 변환
+                </button>
+            </div>
+
+            <!-- 계산기 액정화면 (수식과 결과를 보여주는 영역) -->
+            <div class="calc-screen">
+
+                <!-- 1) [일반 계산기 화면] 기존의 수식 및 결과 미리보기창입니다. (기본 노출) -->
+                <div class="screen-view active" id="calc-screen-view">
+                    <!-- 사용자가 실시간으로 입력 중인 수식 표시창 -->
+                    <div class="formula-display" id="formula-display" placeholder="0">0</div>
+                    <!-- 수식이 계산되기 전에 아래에 흐릿하게 보여주는 실시간 계산 미리보기창 -->
+                    <div class="preview-display" id="preview-display"></div>
+                </div>
+
+                <!-- 2) [환율 계산기 화면] 환율 연산 전용 입력 폼 영역입니다. (평소에는 숨김) -->
+                <div class="screen-view" id="currency-screen-view">
+                    <!-- 보낼 화폐 (기준 화폐) 입력창 -->
+                    <div class="currency-row">
+                        <select class="currency-select" id="from-currency" title="기준 화폐 선택">
+                            <option value="KRW" selected>KRW 🇰🇷 원</option>
+                            <option value="USD">USD 🇺🇸 달러</option>
+                            <option value="JPY">JPY 🇯🇵 엔</option>
+                            <option value="EUR">EUR 🇪🇺 유로</option>
+                            <option value="CNY">CNY 🇨🇳 위안</option>
+                        </select>
+                        <div class="currency-amount" id="from-amount">0</div>
+                    </div>
+
+                    <!-- 화폐 교환 기호 (화살표 형태) -->
+                    <div class="currency-divider">
+                        <i class="fas fa-arrow-down-long"></i>
+                        <span class="rate-indicator" id="rate-indicator">환율 정보 로딩 중...</span>
+                    </div>
+
+                    <!-- 받을 화폐 (대상 화폐) 결과창 -->
+                    <div class="currency-row">
+                        <select class="currency-select" id="to-currency" title="대상 화폐 선택">
+                            <option value="KRW">KRW 🇰🇷 원</option>
+                            <option value="USD" selected>USD 🇺🇸 달러</option>
+                            <option value="JPY">JPY 🇯🇵 엔</option>
+                            <option value="EUR">EUR 🇪🇺 유로</option>
+                            <option value="CNY">CNY 🇨🇳 위안</option>
+                        </select>
+                        <div class="currency-amount result-amount" id="to-amount">0</div>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- 계산기 버튼 영역 (4x5 격자 배치) -->
+            <div class="calc-buttons">
+                <!-- 첫 번째 줄: 기능 관련 버튼 (지우기, 괄호 등) -->
+                <button class="btn btn-func" data-action="clear" id="btn-clear">AC</button>
+                <button class="btn btn-func" data-action="parenthesis-open" id="btn-paren-open">(</button>
+                <button class="btn btn-func" data-action="parenthesis-close" id="btn-paren-close">)</button>
+                <!-- 나누기 기호는 내부적으로는 '/'를 쓰고, 화면에는 '÷'로 보여줍니다. -->
+                <button class="btn btn-op" data-val="/" id="btn-div"><i class="fa-solid fa-divide"></i></button>
+
+                <!-- 두 번째 줄: 숫자 7, 8, 9와 곱하기(*) 버튼 -->
+                <button class="btn btn-num" data-val="7">7</button>
+                <button class="btn btn-num" data-val="8">8</button>
+                <button class="btn btn-num" data-val="9">9</button>
+                <!-- 곱하기 기호는 내부적으로는 '*'를 쓰고, 화면에는 '×'로 보여줍니다. -->
+                <button class="btn btn-op" data-val="*" id="btn-mul"><i class="fa-solid fa-xmark"></i></button>
+
+                <!-- 세 번째 줄: 숫자 4, 5, 6과 빼기(-) 버튼 -->
+                <button class="btn btn-num" data-val="4">4</button>
+                <button class="btn btn-num" data-val="5">5</button>
+                <button class="btn btn-num" data-val="6">6</button>
+                <button class="btn btn-op" data-val="-" id="btn-sub"><i class="fa-solid fa-minus"></i></button>
+
+                <!-- 네 번째 줄: 숫자 1, 2, 3과 더하기(+) 버튼 -->
+                <button class="btn btn-num" data-val="1">1</button>
+                <button class="btn btn-num" data-val="2">2</button>
+                <button class="btn btn-num" data-val="3">3</button>
+                <button class="btn btn-op" data-val="+" id="btn-add"><i class="fa-solid fa-plus"></i></button>
+
+                <!-- 다섯 번째 줄: 소수점, 숫자 0, 한글자 지우기, 등호(=) 버튼 -->
+                <button class="btn btn-num" data-val=".">.</button>
+                <button class="btn btn-num" data-val="0">0</button>
+                <!-- 한 글자 백스페이스 아이콘 버튼 -->
+                <button class="btn btn-func" data-action="backspace" id="btn-backspace"><i
+                        class="fa-solid fa-delete-left"></i></button>
+                <!-- 환율 모드일 때 등호(=) 버튼은 두 화폐의 상하 위치를 바꾸는 Swap(상하 교전) 버튼 기능으로 지능적 전환됩니다. -->
+                <button class="btn btn-equal" data-action="calculate" id="btn-equal"><i
+                        class="fa-solid fa-equals"></i></button>
+            </div>
+
+        </main>
+
+        <!-- 계산 기록을 보여주는 오른쪽 슬라이드 패널 -->
+        <aside class="history-panel" id="history-panel">
+            <div class="history-header">
+                <h3><i class="fas fa-history"></i> 계산 기록</h3>
+                <!-- 기록 패널 닫기 버튼 -->
+                <button class="icon-btn" id="history-close" aria-label="기록 닫기">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <!-- 계산 기록 리스트가 동적으로 렌더링되는 곳입니다. -->
+            <div class="history-list" id="history-list">
+                <!-- 기록이 없을 때 보여줄 기본 안내 문구 -->
+                <div class="empty-history" id="empty-history-msg">
+                    <p>기록된 계산이 없습니다.</p>
+                </div>
+            </div>
+            <!-- 기록을 전체 삭제하는 버튼 -->
+            <div class="history-footer">
+                <button class="clear-history-btn" id="clear-history-btn">
+                    <i class="fas fa-trash-can"></i> 전체 기록 삭제
+                </button>
+            </div>
+        </aside>
+
+    </div>
+
+    <!-- 계산 작동 로직을 제어하는 자바스크립트(app.js)를 연결합니다. -->
+    <script src="app.js"></script>
+</body>
+
+</html>
