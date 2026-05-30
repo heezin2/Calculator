@@ -1,559 +1,269 @@
-/* ==========================================
-   스마트 계산기 메인 디자인 시스템 (style.css)
-   ========================================== */
-
-/* 1. 디자인 시스템 전역 변수 설정 (다크 모드 기준 기본값) */
 :root {
-    --font-primary: 'Outfit', sans-serif;
-
-    /* 다크 모드 테마 색상 정의 */
-    --bg-gradient-1: #0f172a;
-    /* Slate 900 */
-    --bg-gradient-2: #1e1b4b;
-    /* Indigo 950 */
-
-    --calc-bg: rgba(30, 41, 59, 0.45);
-    /* 반투명 배경 (글래스모피즘) */
-    --calc-border: rgba(255, 255, 255, 0.08);
-    /* 얇고 투명한 테두리 */
-    --calc-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
-
-    --screen-bg: rgba(15, 23, 42, 0.6);
-    --screen-text: #f8fafc;
-    /* 밝은 회색 */
-    --screen-preview: rgba(148, 163, 184, 0.7);
-    /* 흐릿한 결과 미리보기 색상 */
-
-    /* 버튼 스타일 변수 */
-    --btn-num-bg: rgba(255, 255, 255, 0.04);
-    --btn-num-text: #f1f5f9;
-    --btn-num-hover: rgba(255, 255, 255, 0.08);
-
-    --btn-func-bg: rgba(255, 255, 255, 0.08);
-    --btn-func-text: #cbd5e1;
-    --btn-func-hover: rgba(255, 255, 255, 0.15);
-
-    --btn-op-bg: rgba(99, 102, 241, 0.15);
-    /* 인디고 반투명 */
-    --btn-op-text: #818cf8;
-    /* 인디고 400 */
-    --btn-op-hover: rgba(99, 102, 241, 0.3);
-
-    /* 등호 버튼은 확실한 포인트를 주기 위한 그라데이션 적용 */
-    --btn-equal-bg: linear-gradient(135deg, #6366f1 0%, #4f46e5 100%);
-    --btn-equal-text: #ffffff;
-    --btn-equal-shadow: 0 4px 15px rgba(99, 102, 241, 0.4);
-
-    /* 기록 사이드바 스타일 */
-    --sidebar-bg: rgba(15, 23, 42, 0.8);
-    --sidebar-border: rgba(255, 255, 255, 0.08);
-    --sidebar-text: #e2e8f0;
-    --history-item-bg: rgba(255, 255, 255, 0.02);
-    --history-item-hover: rgba(255, 255, 255, 0.06);
-    --history-formula: #94a3b8;
-    --history-result: #6366f1;
-
-    /* 오로라 배경용 빛 구체 색상 */
-    --glow-color-1: rgba(99, 102, 241, 0.15);
-    --glow-color-2: rgba(236, 72, 153, 0.1);
-
-    /* [신규 변수] 환율용 글래스 인풋 배경 */
-    --select-bg: rgba(255, 255, 255, 0.04);
+    --bg-app: #fdf2f8;
+    --calc-body: #fbcfe8;
+    --lcd-bg: #dae5e7;
+    --mode-bg: #f1f5f9;
+    --btn-main: #ffffff;
+    --btn-func: #f8fafc;
+    --text-pink: #db2777;
+    --text-green: #059669;
+    --text-main: #1e293b;
+    --shadow: rgba(219, 39, 119, 0.2);
 }
 
-/* 2. 라이트 모드 전환 시 변경될 변수 정의 */
-body.light-mode {
-    --bg-gradient-1: #f8fafc;
-    /* Slate 50 */
-    --bg-gradient-2: #e2e8f0;
-    /* Slate 200 */
-
-    --calc-bg: rgba(255, 255, 255, 0.4);
-    --calc-border: rgba(0, 0, 0, 0.06);
-    --calc-shadow: 0 25px 50px -12px rgba(15, 23, 42, 0.1);
-
-    --screen-bg: rgba(255, 255, 255, 0.7);
-    --screen-text: #0f172a;
-    /* 어두운 slate색 */
-    --screen-preview: rgba(71, 85, 105, 0.6);
-
-    --btn-num-bg: rgba(255, 255, 255, 0.7);
-    --btn-num-text: #334155;
-    --btn-num-hover: rgba(255, 255, 255, 0.9);
-
-    --btn-func-bg: rgba(15, 23, 42, 0.05);
-    --btn-func-text: #475569;
-    --btn-func-hover: rgba(15, 23, 42, 0.1);
-
-    --btn-op-bg: rgba(99, 102, 241, 0.1);
-    --btn-op-text: #4f46e5;
-    --btn-op-hover: rgba(99, 102, 241, 0.2);
-
-    --btn-equal-bg: linear-gradient(135deg, #4f46e5 0%, #4338ca 100%);
-    --btn-equal-text: #ffffff;
-    --btn-equal-shadow: 0 4px 15px rgba(79, 70, 229, 0.3);
-
-    --sidebar-bg: rgba(255, 255, 255, 0.9);
-    --sidebar-border: rgba(0, 0, 0, 0.06);
-    --sidebar-text: #0f172a;
-    --history-item-bg: rgba(0, 0, 0, 0.02);
-    --history-item-hover: rgba(0, 0, 0, 0.04);
-    --history-formula: #64748b;
-    --history-result: #4f46e5;
-
-    --glow-color-1: rgba(99, 102, 241, 0.08);
-    --glow-color-2: rgba(236, 72, 153, 0.06);
-
-    --select-bg: rgba(0, 0, 0, 0.03);
+body.dark-mode {
+    --bg-app: #0f172a;
+    --calc-body: #1e293b;
+    --lcd-bg: #2d3e40;
+    --mode-bg: #0f172a;
+    --btn-main: #334155;
+    --btn-func: #475569;
+    --text-pink: #f472b6;
+    --text-green: #34d399;
+    --text-main: #f8fafc;
+    --shadow: rgba(0, 0, 0, 0.5);
 }
 
-/* 3. 기본 여백 초기화 및 박스 사이징 */
 * {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    box-sizing: border-box;
-    font-family: var(--font-primary);
-    -webkit-tap-highlight-color: transparent;
-    /* 모바일 터치 시 터치 박스 색상 제거 */
+    font-family: 'Noto Sans KR', sans-serif;
+    transition: background-color 0.3s, color 0.3s;
 }
 
 body {
-    width: 100%;
-    min-height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: linear-gradient(135deg, var(--bg-gradient-1) 0%, var(--bg-gradient-2) 100%);
-    overflow: hidden;
-    /* 스크롤이 보이지 않게 하여 깔끔한 느낌 연출 */
-    transition: background 0.5s ease;
-    position: relative;
-}
-
-/* 4. 애니메이션용 오로라 백그라운드 구체 */
-.app-container {
-    position: relative;
-    width: 100%;
+    background-color: var(--bg-app);
     height: 100vh;
     display: flex;
     justify-content: center;
     align-items: center;
-    z-index: 1;
-}
-
-.bg-glow {
-    position: absolute;
-    border-radius: 50%;
-    filter: blur(100px);
-    /* 아주 강한 블러 효과로 몽환적인 오로라 느낌 생성 */
-    z-index: -1;
-    pointer-events: none;
-    /* 클릭 이벤트가 관통되도록 설정 */
-    transition: background 0.5s ease;
-}
-
-.bg-glow-1 {
-    width: 40vw;
-    height: 40vw;
-    top: 10%;
-    left: 15%;
-    background: var(--glow-color-1);
-    animation: floatGlow1 20s infinite alternate ease-in-out;
-}
-
-.bg-glow-2 {
-    width: 35vw;
-    height: 35vw;
-    bottom: 15%;
-    right: 20%;
-    background: var(--glow-color-2);
-    animation: floatGlow2 25s infinite alternate ease-in-out;
-}
-
-@keyframes floatGlow1 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(10%, 15%) scale(1.1);
-    }
-}
-
-@keyframes floatGlow2 {
-    0% {
-        transform: translate(0, 0) scale(1);
-    }
-
-    100% {
-        transform: translate(-15%, -10%) scale(1.2);
-    }
-}
-
-/* 5. 글래스모피즘 계산기 본체 스타일 */
-.calculator {
-    width: 380px;
-    background: var(--calc-bg);
-    border: 1px solid var(--calc-border);
-    border-radius: 30px;
-    padding: 24px;
-    box-shadow: var(--calc-shadow);
-    backdrop-filter: blur(20px);
-    /* 핵심 속성: 배경 글래스 효과 */
-    -webkit-backdrop-filter: blur(20px);
-    display: flex;
-    flex-direction: column;
-    gap: 16px;
-    transition: all 0.5s cubic-bezier(0.4, 0, 0.2, 1);
-    z-index: 10;
-}
-
-/* 6. 계산기 헤더 (타이틀 & 토글들) */
-.calc-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    padding: 0 4px;
-}
-
-.app-title {
-    font-size: 14px;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 2px;
-    color: var(--screen-preview);
-}
-
-/* 아이콘 버튼 공통 디자인 */
-.icon-btn {
-    width: 38px;
-    height: 38px;
-    border: none;
-    border-radius: 12px;
-    background: var(--btn-num-bg);
-    color: var(--btn-num-text);
-    cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    transition: all 0.2s ease;
-    border: 1px solid var(--calc-border);
-}
-
-.icon-btn:hover {
-    background: var(--btn-num-hover);
-    transform: translateY(-2px);
-}
-
-.icon-btn:active {
-    transform: scale(0.95);
-}
-
-/* [신규 디자인] 계산기 모드 전환 탭 스타일 */
-.calc-tabs {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    background: rgba(15, 23, 42, 0.25);
-    border: 1px solid var(--calc-border);
-    padding: 4px;
-    border-radius: 14px;
-}
-
-body.light-mode .calc-tabs {
-    background: rgba(0, 0, 0, 0.04);
-}
-
-.tab-btn {
-    background: transparent;
-    border: none;
-    padding: 10px 0;
-    color: var(--screen-preview);
-    font-size: 13px;
-    font-weight: 600;
-    cursor: pointer;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.25s ease;
-}
-
-.tab-btn.active {
-    background: var(--btn-num-bg);
-    color: var(--btn-num-text);
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
-    border: 1px solid var(--calc-border);
-}
-
-body.light-mode .tab-btn.active {
-    background: #ffffff;
-    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-}
-
-/* 7. 액정 화면 디자인 */
-.calc-screen {
-    width: 100%;
-    min-height: 140px;
-    /* 환율 레이아웃 고려하여 소폭 높임 */
-    background: var(--screen-bg);
-    border: 1px solid var(--calc-border);
-    border-radius: 20px;
-    padding: 16px;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
     overflow: hidden;
-    transition: all 0.3s ease;
 }
 
-/* 탭 전환에 따른 화면 뷰 제어 */
-.screen-view {
-    display: none;
-    flex-direction: column;
-    width: 100%;
-    opacity: 0;
-    transition: opacity 0.3s ease-in-out;
+.casio-body {
+    width: 410px;
+    background-color: var(--calc-body);
+    padding: 25px;
+    border-radius: 20px;
+    box-shadow: 0 15px 40px var(--shadow);
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    position: relative;
 }
 
-.screen-view.active {
+.top-header {
     display: flex;
-    opacity: 1;
-}
-
-/* 일반 계산 스크린 */
-#calc-screen-view {
-    justify-content: flex-end;
-    align-items: flex-end;
-    gap: 8px;
-    height: 100%;
-    min-height: 108px;
-}
-
-/* 입력 수식 창 */
-.formula-display {
-    font-size: 32px;
-    font-weight: 400;
-    color: var(--screen-text);
-    max-height: 70px;
-    overflow-y: auto;
-    width: 100%;
-    text-align: right;
-    line-height: 1.25;
-    -ms-overflow-style: none;
-    scrollbar-width: none;
-}
-
-.formula-display::-webkit-scrollbar {
-    display: none;
-}
-
-/* 실시간 연산 결과 미리보기 창 */
-.preview-display {
-    font-size: 18px;
-    font-weight: 500;
-    color: var(--screen-preview);
-    min-height: 22px;
-    transition: opacity 0.2s ease;
-}
-
-/* [신규 디자인] 환율 계산기 전용 화면 */
-#currency-screen-view {
-    gap: 8px;
-    height: 100%;
-}
-
-.currency-row {
-    display: flex;
+    align-items: center;
     justify-content: space-between;
-    align-items: center;
-    gap: 12px;
-    width: 100%;
+    margin-bottom: 12px;
+    position: relative;
 }
 
-/* 화폐 드롭다운 선택 메뉴 */
-.currency-select {
-    background: var(--select-bg);
-    border: 1px solid var(--calc-border);
-    color: var(--screen-text);
-    padding: 8px 12px;
-    border-radius: 12px;
-    font-size: 14px;
-    font-weight: 500;
-    outline: none;
-    cursor: pointer;
-    transition: background 0.2s;
-    backdrop-filter: blur(10px);
-}
-
-.currency-select:hover {
-    background: var(--btn-num-hover);
-}
-
-/* 드롭다운 하위 항목의 다크/라이트 브라우저 대응 */
-.currency-select option {
-    background: var(--bg-gradient-1);
-    color: var(--screen-text);
-}
-
-body.light-mode .currency-select option {
-    background: #ffffff;
-    color: #000000;
-}
-
-/* 환산 금액 표시 */
-.currency-amount {
-    font-size: 26px;
-    font-weight: 600;
-    color: var(--screen-text);
-    text-align: right;
-    flex-grow: 1;
-    overflow-x: auto;
-    white-space: nowrap;
-    scrollbar-width: none;
-}
-
-.currency-amount::-webkit-scrollbar {
-    display: none;
-}
-
-.result-amount {
-    color: var(--btn-op-text);
-    /* 결과값은 파란색 계열 강조 */
-}
-
-/* 화폐 변환 구분선 및 실시간 환율 텍스트 */
-.currency-divider {
+.header-left {
     display: flex;
     align-items: center;
-    gap: 10px;
-    padding: 2px 4px;
-    border-top: 1px dashed var(--calc-border);
-    border-bottom: 1px dashed var(--calc-border);
+    gap: 15px;
 }
 
-.currency-divider i {
-    font-size: 12px;
-    color: var(--screen-preview);
-}
-
-.rate-indicator {
-    font-size: 11px;
-    color: var(--screen-preview);
-    font-weight: 500;
-}
-
-/* 8. 계산기 버튼 영역 */
-.calc-buttons {
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    /* 4열 격자 구조 */
-    gap: 12px;
-}
-
-/* 버튼들의 공통 디자인 */
-.btn {
-    height: 64px;
-    border: none;
-    border-radius: 18px;
-    font-size: 20px;
-    font-weight: 500;
-    cursor: pointer;
+.j-plus-logo {
+    width: 32px;
+    height: 32px;
+    background-color: #4b5563;
+    color: white;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
-    user-select: none;
-    border: 1px solid var(--calc-border);
+    font-weight: bold;
+    font-size: 16px;
+    border: 2px solid var(--btn-main);
 }
 
-.btn:hover {
-    transform: translateY(-2px);
-    /* 호버 시 미세하게 뜨는 애니메이션 */
+.app-name {
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+    font-weight: 800;
+    font-size: 15px;
+    color: var(--text-pink);
+}
+
+.icon-btn-top {
+    background: none;
+    border: none;
+    cursor: pointer;
+    color: var(--text-pink);
+    font-size: 18px;
+}
+
+.lcd-screen {
+    background-color: var(--lcd-bg);
+    height: 110px;
+    border-radius: 8px;
+    border: 3px solid #64748b;
+    padding: 10px;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.lcd-indicators {
+    display: flex;
+    gap: 8px;
+    font-size: 11px;
+    font-weight: bold;
+    color: rgba(148, 163, 184, 0.4);
+}
+
+.ind.active {
+    color: var(--text-main);
+}
+
+.display-main {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 38px;
+    text-align: right;
+    color: var(--text-main);
+    white-space: nowrap;
+    overflow: hidden;
+}
+
+.mode-area-container {
+    background-color: var(--mode-bg);
+    background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%);
+    background-size: 100% 4px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #64748b;
+    margin-bottom: 20px;
+}
+
+.mode-selector {
+    display: flex;
+    gap: 8px;
+}
+
+.mode-tab {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #94a3b8;
+    border-radius: 6px;
+    background: var(--btn-func);
+    color: var(--text-main);
+    font-weight: bold;
+    font-size: 11px;
+    cursor: pointer;
+}
+
+.mode-tab.active {
+    background: var(--text-pink);
+    color: white;
+    border-color: var(--text-pink);
+}
+
+.keypad {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 10px;
+}
+
+.btn {
+    height: 50px;
+    border: none;
+    border-radius: 8px;
+    background-color: var(--btn-main);
+    font-weight: 700;
+    color: var(--text-main);
+    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    outline: none;
 }
 
 .btn:active {
-    transform: scale(0.93) translateY(0);
-    /* 클릭 시 쫀득하게 들어가기 */
+    transform: translateY(2px);
+    box-shadow: none;
 }
 
-/* 버튼 종류별 고유 색상 매핑 */
+.btn-tax {
+    color: var(--text-green);
+    font-size: 11px;
+}
+
+.btn-clear {
+    color: var(--text-pink);
+}
+
 .btn-num {
-    background: var(--btn-num-bg);
-    color: var(--btn-num-text);
+    font-size: 19px;
 }
 
-.btn-num:hover {
-    background: var(--btn-num-hover);
+.btn.tall {
+    height: 110px;
+    grid-row: span 2;
 }
 
-.btn-func {
-    background: var(--btn-func-bg);
-    color: var(--btn-func-text);
+.curr-select {
+    background: var(--btn-main);
+    color: var(--text-main);
+    border: 1px solid var(--text-pink);
+    border-radius: 5px;
+    padding: 5px;
+    font-size: 13px;
+    font-weight: bold;
+    width: 100%;
+    outline: none;
 }
 
-.btn-func:hover {
-    background: var(--btn-func-hover);
+.exch-container:not(.active),
+.keypad:not(.active) {
+    display: none;
 }
 
-.btn-op {
-    background: var(--btn-op-bg);
-    color: var(--btn-op-text);
-    font-weight: 600;
-    font-size: 22px;
+.exch-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
-.btn-op:hover {
-    background: var(--btn-op-hover);
+.exch-box {
+    background: var(--btn-main);
+    padding: 15px;
+    border-radius: 12px;
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+    border: 1px solid var(--text-pink);
 }
 
-/* 환율 모드 시 비활성화될 버튼에 대한 스타일 */
-.btn.disabled {
-    opacity: 0.25;
-    pointer-events: none;
-    cursor: not-allowed;
+.exch-val {
+    font-family: 'Orbitron', sans-serif;
+    font-size: 24px;
+    color: var(--text-pink);
+    text-align: right;
 }
 
-.btn-equal {
-    background: var(--btn-equal-bg);
-    color: var(--btn-equal-text);
-    box-shadow: var(--btn-equal-shadow);
-    font-size: 22px;
+.exch-divider {
+    text-align: center;
+    color: var(--text-pink);
+    font-size: 20px;
 }
 
-.btn-equal:hover {
-    filter: brightness(1.1);
-    /* 호버 시 약간 밝게 표현 */
-    transform: translateY(-2px);
-}
-
-.btn-equal:active {
-    transform: scale(0.93) translateY(0);
-}
-
-/* 9. 계산 기록 사이드 패널 디자인 */
 .history-panel {
-    position: absolute;
+    position: fixed;
+    right: -320px;
     top: 0;
-    right: -380px;
-    /* 초기 상태에서는 우측 화면 밖으로 숨김 */
-    width: 350px;
+    width: 300px;
     height: 100vh;
-    background: var(--sidebar-bg);
-    border-left: 1px solid var(--sidebar-border);
-    backdrop-filter: blur(20px);
-    -webkit-backdrop-filter: blur(20px);
-    box-shadow: -10px 0 30px rgba(0, 0, 0, 0.1);
+    background: var(--btn-main);
+    box-shadow: -5px 0 20px rgba(0, 0, 0, 0.1);
+    transition: right 0.3s;
+    padding: 20px;
     z-index: 100;
     display: flex;
     flex-direction: column;
-    transition: right 0.4s cubic-bezier(0.16, 1, 0.3, 1);
-    /* 열릴 때 애니메이션 */
-    padding: 24px;
 }
 
-/* 활성화 시 패널이 밀려 들어옵니다 */
 .history-panel.active {
     right: 0;
 }
@@ -562,181 +272,48 @@ body.light-mode .currency-select option {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-bottom: 24px;
-    color: var(--sidebar-text);
-}
-
-.history-header h3 {
-    font-size: 20px;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    gap: 8px;
+    margin-bottom: 20px;
+    color: var(--text-pink);
+    border-bottom: 2px solid var(--text-pink);
+    padding-bottom: 10px;
 }
 
 .history-list {
-    flex-grow: 1;
+    flex: 1;
     overflow-y: auto;
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-    padding-right: 4px;
-    scrollbar-width: thin;
-    scrollbar-color: var(--calc-border) transparent;
+    color: var(--text-main);
 }
 
-.history-list::-webkit-scrollbar {
-    width: 4px;
-}
-
-.history-list::-webkit-scrollbar-thumb {
-    background-color: var(--calc-border);
-    border-radius: 20px;
-}
-
-/* 기록이 없을 때 디자인 */
-.empty-history {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 150px;
-    color: var(--history-formula);
-    font-size: 14px;
-    text-align: center;
-}
-
-/* 각각의 기록 아이템 디자인 */
 .history-item {
-    background: var(--history-item-bg);
-    border: 1px solid var(--calc-border);
-    border-radius: 14px;
-    padding: 12px 16px;
+    padding: 12px;
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+    text-align: right;
     cursor: pointer;
-    display: flex;
-    flex-direction: column;
-    align-items: flex-end;
-    gap: 4px;
-    transition: all 0.2s ease;
 }
 
 .history-item:hover {
-    background: var(--history-item-hover);
-    transform: translateX(-4px);
+    background: rgba(0, 0, 0, 0.03);
 }
 
-.history-item-formula {
-    font-size: 14px;
-    color: var(--history-formula);
-    word-break: break-all;
-    text-align: right;
+.history-item div:first-child {
+    font-size: 11px;
+    color: #94a3b8;
 }
 
-.history-item-result {
+.history-item div:last-child {
     font-size: 18px;
-    font-weight: 600;
-    color: var(--history-result);
+    font-weight: bold;
+    color: var(--text-pink);
 }
 
-/* 푸터 영역의 전체 삭제 버튼 */
-.history-footer {
-    padding-top: 16px;
-    border-top: 1px solid var(--calc-border);
-}
-
-.clear-history-btn {
+#clear-history-btn {
     width: 100%;
     padding: 12px;
+    background: var(--text-pink);
+    color: white;
     border: none;
-    border-radius: 12px;
-    background: rgba(239, 68, 68, 0.1);
-    color: #ef4444;
-    font-weight: 600;
+    border-radius: 5px;
     cursor: pointer;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    gap: 8px;
-    transition: all 0.2s ease;
-}
-
-.clear-history-btn:hover {
-    background: rgba(239, 68, 68, 0.2);
-}
-
-/* 10. 반응형 미디어 쿼리 (화면 맞춤 설계) */
-@media (max-width: 480px) {
-    .calculator {
-        width: 100%;
-        height: 100vh;
-        border-radius: 0;
-        border: none;
-        justify-content: flex-end;
-        padding: 20px 16px 30px 16px;
-    }
-
-    .calc-screen {
-        min-height: 200px;
-        margin-bottom: 5px;
-    }
-
-    .btn {
-        height: 60px;
-        font-size: 18px;
-    }
-
-    .bg-glow {
-        display: none;
-    }
-
-    body {
-        align-items: flex-end;
-    }
-
-    .history-panel {
-        width: 80%;
-    }
-}
-
-/* 계산 기록 개별 삭제 버튼 스타일 */
-.history-item {
-    position: relative;
-    /* 삭제 버튼 배치를 위해 */
-    padding: 12px 35px 12px 16px;
-    /* 우측에 삭제 버튼 공간 확보 */
-}
-
-.history-del-btn {
-    position: absolute;
-    top: 10px;
-    right: 10px;
-    width: 24px;
-    height: 24px;
-    border-radius: 50%;
-    border: none;
-    background: transparent;
-    color: var(--history-formula);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    cursor: pointer;
-    font-size: 12px;
-    transition: all 0.2s ease;
-    opacity: 0;
-    /* 평소엔 숨김 */
-}
-
-.history-item:hover .history-del-btn {
-    opacity: 1;
-    /* 호버 시 보임 */
-}
-
-.history-del-btn:hover {
-    background: rgba(239, 68, 68, 0.2);
-    color: #ef4444;
-}
-
-/* 콤마가 포함된 수식이 넘치지 않도록 조정 */
-.formula-display {
-    word-wrap: break-word;
-    word-break: break-all;
+    font-weight: bold;
+    margin-top: 10px;
 }
