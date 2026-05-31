@@ -1,27 +1,29 @@
 :root {
-    --bg-app: #fdf2f8;
-    --calc-body: #fbcfe8;
-    --lcd-bg: #dae5e7;
-    --mode-bg: #f1f5f9;
-    --btn-main: #ffffff;
-    --btn-func: #f8fafc;
-    --text-pink: #db2777;
-    --text-green: #059669;
-    --text-main: #1e293b;
-    --shadow: rgba(219, 39, 119, 0.2);
+    --bg-app: #f9eff0;
+    --calc-body-top: #ebd2d3;
+    --calc-body-bot: #dcb8b9;
+    --lcd-bg: #e4e6e2;
+    --mode-bg: rgba(255, 255, 255, 0.2);
+    --btn-main: #fcfcfc;
+    --btn-func: #f6f6f6;
+    --text-pink: #ca3e63;
+    --text-green: #40887b;
+    --text-main: #2b2b2b;
+    --shadow: rgba(100, 50, 60, 0.3);
 }
 
 body.dark-mode {
-    --bg-app: #0f172a;
-    --calc-body: #1e293b;
-    --lcd-bg: #2d3e40;
-    --mode-bg: #0f172a;
-    --btn-main: #334155;
-    --btn-func: #475569;
-    --text-pink: #f472b6;
-    --text-green: #34d399;
-    --text-main: #f8fafc;
-    --shadow: rgba(0, 0, 0, 0.5);
+    --bg-app: #1f1416;
+    --calc-body-top: #4a3436;
+    --calc-body-bot: #362224;
+    --lcd-bg: #323531;
+    --mode-bg: rgba(0, 0, 0, 0.2);
+    --btn-main: #2a2a2a;
+    --btn-func: #222222;
+    --text-pink: #e86487;
+    --text-green: #56baa8;
+    --text-main: #ececec;
+    --shadow: rgba(0, 0, 0, 0.6);
 }
 
 * {
@@ -43,11 +45,13 @@ body {
 
 .casio-body {
     width: 410px;
-    background-color: var(--calc-body);
+    background: linear-gradient(145deg, var(--calc-body-top), var(--calc-body-bot));
     padding: 25px;
     border-radius: 20px;
-    box-shadow: 0 15px 40px var(--shadow);
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: 0 15px 40px var(--shadow), 
+                inset 0 2px 5px rgba(255,255,255,0.7), 
+                inset 0 -3px 5px rgba(0,0,0,0.1);
+    border: 1px solid rgba(255, 255, 255, 0.4);
     position: relative;
 }
 
@@ -100,7 +104,9 @@ body {
     background-color: var(--lcd-bg);
     height: 110px;
     border-radius: 8px;
-    border: 3px solid #64748b;
+    border: 1px solid rgba(0, 0, 0, 0.1);
+    box-shadow: inset 0 3px 8px rgba(0,0,0,0.15), 
+                inset 0 -2px 4px rgba(255,255,255,0.5);
     padding: 10px;
     margin-bottom: 15px;
     display: flex;
@@ -131,11 +137,11 @@ body {
 
 .mode-area-container {
     background-color: var(--mode-bg);
-    background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.05) 50%);
+    background-image: linear-gradient(0deg, transparent 50%, rgba(255, 255, 255, 0.1) 50%);
     background-size: 100% 4px;
     padding: 10px;
     border-radius: 10px;
-    border: 1px solid #64748b;
+    border: 1px solid rgba(0, 0, 0, 0.05);
     margin-bottom: 20px;
 }
 
@@ -175,14 +181,20 @@ body {
     background-color: var(--btn-main);
     font-weight: 700;
     color: var(--text-main);
-    box-shadow: 0 3px rgba(0, 0, 0, 0.1);
+    box-shadow: 0 4px 5px rgba(0,0,0,0.15), 
+                inset 0 3px 3px rgba(255,255,255,1), 
+                inset 0 -2px 3px rgba(0,0,0,0.05);
     cursor: pointer;
     outline: none;
+    position: relative;
+    top: 0;
 }
 
 .btn:active {
-    transform: translateY(2px);
-    box-shadow: none;
+    top: 3px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.1), 
+                inset 0 1px 2px rgba(255,255,255,0.8), 
+                inset 0 -1px 2px rgba(0,0,0,0.05);
 }
 
 .btn-tax {
